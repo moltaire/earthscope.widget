@@ -1,4 +1,4 @@
-command: "python ./earthscrape.widget/earthscrape.py"
+command: "python ./earthscope.widget/earthscope.py"
 
 refreshFrequency: (1000 * 10)
 
