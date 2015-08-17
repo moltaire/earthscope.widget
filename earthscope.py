@@ -5,8 +5,8 @@ import os
 from random import choice
 
 # choose random file from image directory
-files = [info for info in os.listdir('earthscrape.widget/images/') if info.endswith('.json')]
-json_path = 'earthscrape.widget/images/' + choice(files)
+files = [info for info in os.listdir('earthscope.widget/images/') if info.endswith('.json')]
+json_path = 'earthscope.widget/images/' + choice(files)
 image_path = json_path.split('.json')[0] + '.jpg'
 
 # load json file into info dictionary
