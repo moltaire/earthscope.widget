@@ -34,7 +34,7 @@ style: """
 render: -> """
     <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"></head>
     <div class='earthview'>
-    <img id='image' src='', width=1280, height=800>
+    <img id='image' src='', width=1920, height=1400>
     </div>
     <div class='annotation'>
     <text class="region" id="region"></text> <text class="country" id = "country"></text> <a class='globe' href='' id="url"><i class="fa fa-globe"></i></a>
