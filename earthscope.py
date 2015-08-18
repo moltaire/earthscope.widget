@@ -1,16 +1,26 @@
 #!/usr/bin/python
 
 import json
+import urllib2
 import os
-from random import choice
 
-# choose random file from image directory
-files = [info for info in os.listdir('earthscope.widget/images/') if info.endswith('.json')]
-json_path = 'earthscope.widget/images/' + choice(files)
-image_path = json_path.split('.json')[0] + '.jpg'
+# download the current earthview json file
+html_con = urllib2.urlopen('https://earthview.withgoogle.com')
+website = html_con.read()
+html_con.close()
+start = 'explore" href="'
+end = '">Explore</a>'
+url = website[website.index(start)+len(start):website.index(end)]
 
-# load json file into info dictionary
-with open(json_path) as json_file:
+api_con = urllib2.urlopen('https://earthview.withgoogle.com/_api' + url + '.json')
+api = api_con.read()
+api_con.close()
+
+with open('api.json', 'w') as api_file:
+    api_file.write(api)
+
+# load previously created json file into info dictionary
+with open('api.json') as json_file:
     info = json.load(json_file)
 
 # if country, region or url are missing, add blank fields
@@ -19,7 +29,7 @@ for key in ['country', 'region', 'url']:
         info[key] = ''
 
 # write image_path to dictionary
-info['image_path'] = image_path
+info['image_path'] = info['photoUrl']
 
 # give back json file
 print json.dumps(info)
