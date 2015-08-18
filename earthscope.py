@@ -16,11 +16,11 @@ api_con = urllib2.urlopen('https://earthview.withgoogle.com/_api' + url + '.json
 api = api_con.read()
 api_con.close()
 
-with open('api.json', 'w') as api_file:
+with open('earthscope.widget/api.json', 'w') as api_file:
     api_file.write(api)
 
 # load previously created json file into info dictionary
-with open('api.json') as json_file:
+with open('earthscope.widget/api.json') as json_file:
     info = json.load(json_file)
 
 # if country, region or url are missing, add blank fields
