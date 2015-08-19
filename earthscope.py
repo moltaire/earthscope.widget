@@ -23,6 +23,9 @@ with open('earthscope.widget/api.json', 'w') as api_file:
 with open('earthscope.widget/api.json') as json_file:
     info = json.load(json_file)
 
+# remove the json file just created
+os.system('rm earthscope.widget/api.json')
+
 # if country, region or url are missing, add blank fields
 for key in ['country', 'region', 'url']:
     if not key in info:
