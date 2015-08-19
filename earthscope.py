@@ -34,7 +34,7 @@ for key in ['country', 'region', 'url']:
 #download file here
 f = urllib2.urlopen(info['photoUrl'])
 # Open our local file for writing
-with open('earthscope.widget/images/image.jpg', "wb") as local_file:
+with open('earthscope.widget/image.jpg', "wb") as local_file:
     local_file.write(f.read())
 f.close()
 
