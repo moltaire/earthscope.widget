@@ -4,6 +4,8 @@ refreshFrequency: (1000 * 60) # this is 1 minute
 
 style: """
 
+  user-select: none
+
   .earthview
     height: 100%
     width: 100%
@@ -30,6 +32,13 @@ style: """
     a:visited {color: #99d594}
     a:hover {color: #99d594}
     a:active {color: #99d594}
+
+  .nlink
+    font-size: 10pt
+    a:link {color: #ffffff}
+    a:visited {color: #fc8d59}
+    a:hover {color: #fc8d59}
+    a:active {color: #fc8d59}
 
   .annotation
     color: white
@@ -72,12 +81,13 @@ style: """
 render: -> """
     <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"></head>
     <div class='earthview'>
-    <img id='image' src='', width=1280, height=800>
+    <img id='image' src='', width=1, height=1>
     </div>
     <div id='popup' class='popup annotation'>
-      <span class='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
-      <span class='wlink'><a href="javascript:;" title='View on web'       id="ev"><i class="fa fa-globe">   </i></a></span><br>
+      <span class='nlink'><a href="javascript:;" title='Show next Image'   id="nx"><i class="fa fa-forward"> </i></a></span><br>
+      <span class='wlink'><a href="javascript:;" title='View on Web'       id="ev"><i class="fa fa-globe">   </i></a></span><br>
       <span class='dlink'><a href="javascript:;" title='Copy to Downloads' id="dl"><i class="fa fa-download"></i></a></span><br>
+      <span class='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
     </div>
     <div class='annotation'>
     <text class="region" id="region"></text>
@@ -92,25 +102,36 @@ update: (output, domEl) ->
 
   $info = JSON.parse(output)
 
+  $scrw = $(window).width();
+  $scrh = $(window).height();
+
   $dom.find('#country').html  $info.country
   $dom.find('#region').html  $info.region
   $dom.find('#image').attr("src", $info.image_path)
+  $dom.find('#image').attr("width", $scrw)
+  $dom.find('#image').attr("height", $scrh)
   $dom.find('#ev').attr("href", 'https://earthview.withgoogle.com' + $info.url)
 
-  $(domEl).on 'click', '#fv', => @run "cp " + $info.image_path + ' earthscope.widget/favorites/' + $info.url + '.jpg'
-  $(domEl).on 'click', '#dl', => @run "cp " + $info.image_path + ' ~/Downloads/' + $info.url + '.jpg'
+  # remove old click events
+  $dom.find('#fv').unbind('click');
+  $dom.find('#dl').unbind('click');
+  $dom.find('#nx').unbind('click');
+  # copy to favorites / Downloads
+  $dom.find('#fv').click => @run "cp " + $info.image_path + " earthscope.widget/favorites/" + $info.url + '.jpg'
+  $dom.find('#dl').click => @run "cp " + $info.image_path + " ~/Downloads/" + $info.url + '.jpg'
+  $dom.find('#nx').click => @refresh()
 
-  $(domEl).find('.share').hover ->
+  $dom.find('.share').hover ->
       $('.popup').css({'display': 'block'})
       $('.share').css({'-webkit-transform': 'rotate(90deg)'})
       $('.share').css({'-moz-transform': 'rotate(90deg)'})
 
-  $(domEl).find('.earthview').hover ->
+  $dom.find('.earthview').hover ->
       $('.popup').css({'display': 'none'})
       $('.share').css({'-webkit-transform': 'rotate(0deg)'})
       $('.share').css({'-moz-transform': 'rotate(0deg)'})
 
-  $(domEl).find('.popup').click ->
+  $dom.find('.popup').click ->
       $('.popup').css({'display': 'none'})
       $('.share').css({'-webkit-transform': 'rotate(0deg)'})
       $('.share').css({'-moz-transform': 'rotate(0deg)'})
