@@ -72,7 +72,7 @@ style: """
 render: -> """
     <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"></head>
     <div class='earthview'>
-    <img id='image' src='image.jpg', width=1280, height=800>
+    <img id='image' src='image.jpg', width=1920, height=1440>
     </div>
     <div id='popup' class='popup annotation'>
       <span class='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
@@ -97,20 +97,24 @@ update: (output, domEl) ->
   $dom.find('#image').attr("src", $info.image_path)
   $dom.find('#ev').attr("href", 'https://earthview.withgoogle.com' + $info.url)
 
-  $(domEl).on 'click', '#fv', => @run "cp earthscope.widget/image.jpg earthscope.widget/favorites/" + $info.url + '.jpg'
-  $(domEl).on 'click', '#dl', => @run "cp earthscope.widget/image.jpg ~/Downloads/" + $info.url + '.jpg'
+  # remove old click events
+  $dom.find('#fv').unbind('click');
+  $dom.find('#dl').unbind('click');
+  # copy to favorites / Downloads
+  $dom.find('#fv').click => @run "cp earthscope.widget/image.jpg earthscope.widget/favorites/" + $info.url + '.jpg'
+  $dom.find('#dl').click => @run "cp earthscope.widget/image.jpg ~/Downloads/" + $info.url + '.jpg'
 
-  $(domEl).find('.share').hover ->
+  $dom.find('.share').hover ->
       $('.popup').css({'display': 'block'})
       $('.share').css({'-webkit-transform': 'rotate(90deg)'})
       $('.share').css({'-moz-transform': 'rotate(90deg)'})
 
-  $(domEl).find('.earthview').hover ->
+  $dom.find('.earthview').hover ->
       $('.popup').css({'display': 'none'})
       $('.share').css({'-webkit-transform': 'rotate(0deg)'})
       $('.share').css({'-moz-transform': 'rotate(0deg)'})
 
-  $(domEl).find('.popup').click ->
+  $dom.find('.popup').click ->
       $('.popup').css({'display': 'none'})
       $('.share').css({'-webkit-transform': 'rotate(0deg)'})
       $('.share').css({'-moz-transform': 'rotate(0deg)'})
