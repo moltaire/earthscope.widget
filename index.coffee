@@ -96,6 +96,7 @@ update: (output, domEl) ->
 
   $dom.find('#country').html  $info.country
   $dom.find('#region').html  $info.region
+  $dom.find('#image').attr("src", $info.image_path)
   $dom.find('#image').attr("width", $scrw)
   $dom.find('#image').attr("height", $scrh)
   $dom.find('#ev').attr("href", 'https://earthview.withgoogle.com' + $info.url)
