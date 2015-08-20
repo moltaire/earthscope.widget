@@ -72,7 +72,7 @@ style: """
 render: -> """
     <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"></head>
     <div class='earthview'>
-    <img id='image' src='image.jpg', width=1920, height=1440>
+    <img id='image' src='earthscope.widget/image.jpg', width=1, height=1>
     </div>
     <div id='popup' class='popup annotation'>
       <span class='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
@@ -89,12 +89,15 @@ render: -> """
 update: (output, domEl) ->
 
   $dom = $(domEl)
-
   $info = JSON.parse(output)
+
+  $scrw = $(window).width();
+  $scrh = $(window).height();
 
   $dom.find('#country').html  $info.country
   $dom.find('#region').html  $info.region
-  $dom.find('#image').attr("src", $info.image_path)
+  $dom.find('#image').attr("width", $scrw)
+  $dom.find('#image').attr("height", $scrh)
   $dom.find('#ev').attr("href", 'https://earthview.withgoogle.com' + $info.url)
 
   # remove old click events
