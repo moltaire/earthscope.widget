@@ -82,7 +82,7 @@ render: -> """
     <img id='image' src='earthscope.widget/image.jpg', width=1, height=1>
     </div>
     <div id='popup' class='popup annotation'>
-      <span class='nlink'><a href="javascript:;" title='Show next Image'   id="nx"><i class="fa fa-refresh">   </i></a></span><br>
+      <span class='nlink'><a href="javascript:;" title='Show next Image'   id="nx"><i class="fa fa-forward">   </i></a></span><br>
       <span class='wlink'><a href="javascript:;" title='View on Web'       id="ev"><i class="fa fa-globe">   </i></a></span><br>
       <span class='dlink'><a href="javascript:;" title='Copy to Downloads' id="dl"><i class="fa fa-download"></i></a></span><br>
       <span class='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
@@ -112,6 +112,7 @@ update: (output, domEl) ->
   # remove old click events
   $dom.find('#fv').unbind('click');
   $dom.find('#dl').unbind('click');
+  $dom.find('#nx').unbind('click');
   # copy to favorites / Downloads
   $dom.find('#fv').click => @run "cp earthscope.widget/image.jpg earthscope.widget/favorites/" + $info.url + '.jpg'
   $dom.find('#dl').click => @run "cp earthscope.widget/image.jpg ~/Downloads/" + $info.url + '.jpg'
