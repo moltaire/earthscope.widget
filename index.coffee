@@ -12,7 +12,14 @@ style: """
     position: absolute
     z-index:0
 
-  .flink
+  .faved
+    font-size: 10pt
+    a:link {color: #d53e4f}
+    a:visited {color: #ffffff}
+    a:hover {color: #ffffff}
+    a:active {color: #ffffff}
+
+  .notfaved
     font-size: 10pt
     a:link {color: #ffffff}
     a:visited {color: #d53e4f}
@@ -87,7 +94,7 @@ render: -> """
       <span class='nlink'><a href="javascript:;" title='Show next Image'   id="nx"><i class="fa fa-forward"> </i></a></span><br>
       <span class='wlink'><a href="javascript:;" title='View on Web'       id="ev"><i class="fa fa-globe">   </i></a></span><br>
       <span class='dlink'><a href="javascript:;" title='Copy to Downloads' id="dl"><i class="fa fa-download"></i></a></span><br>
-      <span class='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
+      <span class='flink', id='flink'><a href="javascript:;" title='Mark as Favorite'  id="fv"><i class="fa fa-heart">   </i></a></span><br>
     </div>
     <div class='annotation'>
     <text class="region" id="region"></text>
@@ -111,6 +118,7 @@ update: (output, domEl) ->
   $dom.find('#image').attr("width", $scrw)
   $dom.find('#image').attr("height", $scrh)
   $dom.find('#ev').attr("href", 'https://earthview.withgoogle.com' + $info.url)
+  $dom.find('#flink').addClass($info.fav);
 
   # remove old click events
   $dom.find('#fv').unbind('click');

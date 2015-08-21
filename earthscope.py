@@ -18,6 +18,12 @@ for key in ['country', 'region', 'url']:
     if not key in info:
         info[key] = ''
 
+# check if already favorite
+if os.path.isfile('earthscope.widget/favorites/' + info['url'] + '.jpg'):
+    info['fav'] = 'faved'
+else:
+    info['fav'] = 'notfaved'
+
 # write image_path to dictionary
 info['image_path'] = image_path
 
